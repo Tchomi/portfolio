@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Build & Serwis - Tomasz Naglik</title>
+    <meta name="description" content="Montaż i serwis PC. Zdjęcia stacji roboczych.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deeppurple: '#1A0B2E',
+                        neoncyan: '#00FFFF',
+                        darkbg: '#0A0514'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0A0514; color: #ffffff; overflow-x: hidden; position: relative; }
+        body::before {
+            content: ''; position: fixed; top: -20%; left: -10%; width: 120%; height: 120%;
+            background: radial-gradient(circle at 10% 20%, rgba(26, 11, 46, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(74, 222, 128, 0.05) 0%, transparent 40%);
+            z-index: -1; pointer-events: none;
+        }
+        .glass-panel {
+            background: rgba(26, 11, 46, 0.25); backdrop-filter: blur(16px);
+            border: 1px solid rgba(74, 222, 128, 0.15); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-nav {
+            background: rgba(10, 5, 20, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(74, 222, 128, 0.2);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0A0514; }
+        ::-webkit-scrollbar-thumb { background: #1A0B2E; border-radius: 4px; border: 1px solid rgba(74, 222, 128, 0.3); }
+        ::-webkit-scrollbar-thumb:hover { background: #4ADE80; }
+        
+        /* Dropdown Styles */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+        }
+
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-200">
+    <nav class="fixed w-full top-0 z-50 glass-nav py-4 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-wider text-white">
+                PORT<span class="text-green-400">FOLIO</span>
+            </a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html#home" class="hover:text-green-400 transition-colors">Start</a>
+                
+                <!-- Dropdown Kariera -->
+                <div class="relative dropdown group z-[60]">
+                    <a href="index.html#portfolio" class="flex items-center hover:text-green-400 transition-colors py-2 font-bold">
+                        Kariera <i class="fa-solid fa-chevron-down ml-2 text-xs group-hover:rotate-180 transition-transform"></i>
+                    </a>
+                    <div class="dropdown-menu absolute right-0 top-full w-64 bg-[#0A0514] rounded-xl border-2 border-green-400 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.8)] mt-2 z-[100]">
+                        <div class="flex flex-col space-y-1 relative z-10">
+                            <!-- Kategoria: E-sport -->
+                            <div class="px-4 py-2 text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase border-b border-gray-800 mb-1">E-Sport</div>
+
+                            <a href="turnieje.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-green-400 hover:bg-opacity-10 hover:text-green-400 transition-all group/item text-sm">
+                                <i class="fa-solid fa-trophy w-6 text-yellow-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Osiągnięcia Turniejowe</span>
+                            </a>
+                            <a href="komentator.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-green-400 hover:bg-opacity-10 hover:text-green-400 transition-all group/item text-sm">
+                                <i class="fa-solid fa-microphone w-6 text-blue-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Komentator Rozgrywek</span>
+                            </a>
+                            <a href="manager.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-green-400 hover:bg-opacity-10 hover:text-green-400 transition-all group/item text-sm">
+                                <i class="fa-solid fa-sitemap w-6 text-pink-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Project Manager & Media</span>
+                            </a>
+                            <!-- Kategoria: Projekty i Edukacja -->
+                            <div class="px-4 py-2 mt-2 text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase border-b border-gray-800 mb-1">Projekty i Edukacja</div>
+
+                            <a href="pc-build.html" class="flex items-center px-4 py-3 rounded-lg bg-green-400 bg-opacity-10 text-green-400 transition-all group/item text-sm">
+                                <i class="fa-solid fa-desktop w-6 text-green-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span class="font-bold">Montaż i Serwis PC</span>
+                            </a>
+                            <a href="index.html#filter-webdev" class="flex items-center px-4 py-3 rounded-lg hover:bg-green-400 hover:bg-opacity-10 hover:text-green-400 transition-all group/item text-sm">
+                                <i class="fa-solid fa-code w-6 text-cyan-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Projekty Webowe</span>
+                            </a>
+                            <a href="index.html#filter-grafika" class="flex items-center px-4 py-3 rounded-lg hover:bg-green-400 hover:bg-opacity-10 hover:text-green-400 transition-all group/item text-sm">
+                                <i class="fa-solid fa-palette w-6 text-purple-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Portfolio Graficzne</span>
+                            </a>
+                            <a href="index.html#open-modal-modal-edu" class="flex items-center px-4 py-3 rounded-lg hover:bg-green-400 hover:bg-opacity-10 hover:text-green-400 transition-all group/item text-sm">
+                                <i class="fa-solid fa-certificate w-6 text-yellow-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Certyfikaty Informatyczne</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="index.html#contact" class="hover:text-green-400 transition-colors">Kontakt</a>
+            </div>
+            
+            <!-- Mobile Powrót -->
+            <div class="flex md:hidden">
+                <a href="index.html#portfolio" class="text-green-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Powrót
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen pt-32 pb-24 relative">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="glass-panel p-6 md:p-12 rounded-2xl border border-green-400 border-opacity-30">
+                <div class="mb-12 border-b border-gray-700 pb-6 text-center">
+                    <i class="fa-solid fa-screwdriver-wrench text-5xl md:text-6xl text-green-400 mb-6 drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]"></i>
+                    <h2 class="text-4xl md:text-5xl font-bold text-green-400 mb-4">Montaż i Serwis PC</h2>
+                    <p class="text-gray-400 text-lg max-w-2xl mx-auto">Profesjonalny montaż zestawów komputerowych (gaming, stacje robocze), sprzętowa diagnostyka usterkowa oraz optymalizacja gotowych jednostek.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-[350px]">
+                    
+                    <!-- Projekt 1 (qlocu) - Tall Portrait -->
+                    <div class="gallery-item relative overflow-hidden rounded-xl border border-gray-700 hover:border-green-400 shadow-lg group md:row-span-2">
+                        <img src="Pcqlocu.jpg" alt="PC qlocu" class="object-cover w-full h-full object-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8">
+                            <h3 class="text-3xl font-bold text-white mb-3 shadow-black drop-shadow-lg">Realizacja: Konrad "Qlocuu" Klocek</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed">Setup klasy Pro-Level zoptymalizowany pod kątem stabilności i płynności wymaganej na profesjonalnej scenie Counter Strike 2.</p>
+                        </div>
+                    </div>
+
+                    <!-- Projekt 2 (Tomek) -->
+                    <div class="gallery-item relative overflow-hidden rounded-xl border border-gray-700 hover:border-green-400 shadow-lg group">
+                        <img src="pctomek.jpg" alt="PC Tomek" class="object-cover w-full h-full object-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Gaming & Streaming</h3>
+                            <p class="text-gray-300 text-sm">Konfiguracja własna bez kompromisów w pracy i rozrywce.</p>
+                        </div>
+                    </div>
+
+                    <!-- Projekt 5 (Aga) - Przeniesiony do góry -->
+                    <div class="gallery-item relative overflow-hidden rounded-xl border border-gray-700 hover:border-green-400 shadow-lg group">
+                        <img src="pcaga.jpg" alt="PC Aga" class="object-cover w-full h-full object-[center_30%]">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">PC Agnieszki</h3>
+                            <p class="text-gray-300 text-sm">Profesjonalne narzędzie pracy rano i wydajna maszyna do gier wieczorem.</p>
+                        </div>
+                    </div>
+
+                    <!-- Projekt 3 (Repo) -->
+                    <div class="gallery-item relative overflow-hidden rounded-xl border border-gray-700 hover:border-green-400 shadow-lg group">
+                        <img src="pcrepo.png" alt="PC Repo" class="object-cover w-full h-full object-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Projekt "Repo"</h3>
+                            <p class="text-gray-300 text-sm">Perfekcyjny cable management i rygorystyczna wentylacja obudowy.</p>
+                        </div>
+                    </div>
+
+                    <!-- Projekt 4 (Grzegorz) -->
+                    <div class="gallery-item relative overflow-hidden rounded-xl border border-gray-700 hover:border-green-400 shadow-lg group">
+                        <img src="PCGrzegorz.jpg" alt="PC Grzegorz" class="object-cover w-full h-full object-center">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Komputer dla Grzegorza</h3>
+                            <p class="text-gray-300 text-sm">Czysta estetyka, bezkompromisowa moc w grach Singleplayer.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-500 text-sm border-t border-gray-800 relative z-10 bg-[#0A0514]">
+        <p>&copy; 2026 Portfolio. Tomasz "Tchomii" Naglik.</p>
+    </footer>
+</body>
+</html>

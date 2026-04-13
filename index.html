@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Tomasz Naglik</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Nowoczesne portfolio multidyscyplinarne - Programowanie, E-sport, Grafika.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deeppurple: '#1A0B2E',
+                        neoncyan: '#00FFFF',
+                        darkbg: '#0A0514'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #0A0514;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient background glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle at 10% 20%, rgba(26, 11, 46, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            background: rgba(26, 11, 46, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-nav {
+            background: rgba(10, 5, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #D900FF 0%, #00FFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .neon-border:hover {
+            border-color: #00FFFF;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .neon-button {
+            border: 1px solid #00FFFF;
+            color: #00FFFF;
+            background: transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0);
+        }
+
+        .neon-button:hover,
+        .neon-button.active {
+            background: #00FFFF;
+            color: #0A0514;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .neon-submit:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .filter-hidden {
+            display: none !important;
+        }
+
+        /* Scrollbar customizing dla modalu */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0A0514;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1A0B2E;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00FFFF;
+        }
+
+        html {
+            scroll-padding-top: 80px;
+        }
+
+        /* Modal classes */
+        .modal-active {
+            overflow: hidden;
+            /* prevents body scroll */
+        }
+
+        .custom-modal {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .custom-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+        }
+
+        .custom-modal.open .modal-content-scale {
+            transform: scale(1);
+        }
+
+        .modal-content-scale {
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -33px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #00FFFF;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.8);
+        }
+
+        /* Dropdown Styles */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Zapobieganie zamykaniu menu przy przechodzeniu myszką na listę */
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            z-index: 10;
+        }
+    </style>
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-200">
+
+    <!-- 1. Nawigacja (Sticky Menu) -->
+    <nav class="fixed w-full top-0 z-50 glass-nav py-4 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-wider text-white">
+                PORT<span class="text-neoncyan">FOLIO</span>
+            </a>
+
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="hover:text-neoncyan transition-colors">Start</a>
+
+                <!-- Dropdown Kariera -->
+                <div class="relative dropdown group z-[60]">
+                    <a href="#portfolio" class="flex items-center hover:text-neoncyan transition-colors py-2">
+                        Kariera <i
+                            class="fa-solid fa-chevron-down ml-2 text-xs group-hover:rotate-180 transition-transform"></i>
+                    </a>
+                    <div
+                        class="dropdown-menu absolute right-0 top-full w-64 bg-[#0A0514] rounded-xl border-2 border-neoncyan p-2 shadow-[0_20px_50px_rgba(0,0,0,0.8)] mt-2 z-[100]">
+                        <div class="flex flex-col space-y-1 relative z-10">
+                            <!-- Kategoria: E-sport -->
+                            <div
+                                class="px-4 py-2 text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase border-b border-gray-800 mb-1">
+                                E-Sport</div>
+
+                            <a href="turnieje.html"
+                                class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i
+                                    class="fa-solid fa-trophy w-6 text-yellow-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Osiągnięcia Turniejowe</span>
+                            </a>
+                            <a href="komentator.html"
+                                class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i
+                                    class="fa-solid fa-microphone w-6 text-blue-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Komentator Rozgrywek</span>
+                            </a>
+                            <a href="manager.html"
+                                class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i
+                                    class="fa-solid fa-sitemap w-6 text-pink-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Project Manager & Media</span>
+                            </a>
+                            <!-- Kategoria: Projekty i Edukacja -->
+                            <div
+                                class="px-4 py-2 mt-2 text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase border-b border-gray-800 mb-1">
+                                Projekty i Edukacja</div>
+
+                            <a href="pc-build.html"
+                                class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i
+                                    class="fa-solid fa-desktop w-6 text-green-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Montaż i Serwis PC</span>
+                            </a>
+                            <a href="#filter-webdev"
+                                class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i
+                                    class="fa-solid fa-code w-6 text-cyan-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Projekty Webowe</span>
+                            </a>
+                            <a href="#filter-grafika"
+                                class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i
+                                    class="fa-solid fa-palette w-6 text-purple-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Portfolio Graficzne</span>
+                            </a>
+                            <a href="#open-modal-modal-edu"
+                                class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i
+                                    class="fa-solid fa-certificate w-6 text-yellow-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Certyfikaty Informatyczne</span>
+                            </a>
+                        </div>
+                        <!-- Subtelne tło gradientowe w dropdownie -->
+                        <div
+                            class="absolute -bottom-10 -right-10 w-32 h-32 bg-neoncyan opacity-5 blur-3xl pointer-events-none">
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#contact" class="hover:text-neoncyan transition-colors">Kontakt</a>
+            </div>
+
+            <button class="md:hidden text-neoncyan text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <p class="text-neoncyan font-medium tracking-wide uppercase">Tomasz "Tchomii" Naglik
+                </p>
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight">
+                    Architekt <br>
+                    <span class="gradient-text">E-sportowych Doświadczeń</span>
+                </h1>
+                <p class="text-gray-400 text-lg md:text-xl max-w-lg">
+                    Od fundamentów po wielkie emocje.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#portfolio"
+                        class="bg-neoncyan text-darkbg px-8 py-3 rounded-md font-bold hover:bg-green-400 transition-colors shadow-[0_0_15px_rgba(57,255,20,0.4)]">
+                        Zobacz Karierę
+                    </a>
+                    <a href="#contact" class="neon-button px-8 py-3 rounded-md font-bold">
+                        Skontaktuj się
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative flex flex-col justify-center items-center group">
+                <!-- Tło dla efektu świecenia -->
+                <div
+                    class="w-72 h-72 md:w-96 md:h-96 rounded-full bg-neoncyan opacity-20 blur-3xl absolute top-0 md:top-auto group-hover:opacity-40 transition-opacity duration-500">
+                </div>
+
+                <!-- Okrągły Wrapper na obrazek -->
+                <div
+                    class="relative z-10 w-64 h-64 md:w-80 md:h-80 rounded-full p-2 border-2 border-gray-700 glass-panel shadow-[0_0_20px_rgba(57,255,20,0.15)] group-hover:border-neoncyan group-hover:shadow-[0_0_40px_rgba(57,255,20,0.5)] transition-all duration-500 transform group-hover:scale-105">
+                    <img src="./1m0U7Jvp_400x400.jpg" alt="Tomasz Naglik - Avatar"
+                        class="w-full h-full object-cover rounded-full pointer-events-none">
+                </div>
+
+                <!-- Ikony Social Media -->
+                <div class="relative z-10 mt-6 flex space-x-5">
+                    <a href="https://facebook.com/tch0mi" target="_blank" rel="noopener noreferrer"
+                        class="w-12 h-12 rounded-full glass-panel border border-gray-700 flex items-center justify-center text-xl text-gray-300 hover:text-[#1877F2] hover:border-[#1877F2] hover:shadow-[0_0_15px_rgba(24,119,242,0.4)] transition-all duration-300 transform hover:-translate-y-1">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://x.com/tchomii" target="_blank" rel="noopener noreferrer"
+                        class="w-12 h-12 rounded-full glass-panel border border-gray-700 flex items-center justify-center text-xl text-gray-300 hover:text-white hover:border-white hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] transition-all duration-300 transform hover:-translate-y-1">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                    <a href="https://twitch.tv/tchomi_" target="_blank" rel="noopener noreferrer"
+                        class="w-12 h-12 rounded-full glass-panel border border-gray-700 flex items-center justify-center text-xl text-gray-300 hover:text-[#9146FF] hover:border-[#9146FF] hover:shadow-[0_0_15px_rgba(145,70,255,0.4)] transition-all duration-300 transform hover:-translate-y-1">
+                        <i class="fa-brands fa-twitch"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Sekcja Portfolio -->
+    <section id="portfolio" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4"> <span class="gradient-text">Doświadczenie</span></h2>
+                <div class="w-24 h-1 bg-neoncyan mx-auto rounded-full box-shadow"></div>
+            </div>
+
+            <div class="flex justify-center flex-wrap gap-4 mb-12">
+                <button
+                    class="filter-btn bg-neoncyan text-darkbg shadow-[0_0_15px_rgba(57,255,20,0.5)] px-6 py-2 rounded-full font-medium transition-all"
+                    data-filter="esport">E-sport</button>
+                <button
+                    class="filter-btn text-white border border-gray-600 hover:border-neoncyan hover:shadow-[0_0_15px_rgba(57,255,20,0.5)] px-6 py-2 rounded-full font-medium transition-all"
+                    data-filter="pc-build">PC Build</button>
+                <button
+                    class="filter-btn text-white border border-gray-600 hover:border-neoncyan hover:shadow-[0_0_15px_rgba(57,255,20,0.5)] px-6 py-2 rounded-full font-medium transition-all"
+                    data-filter="grafika">Grafiki</button>
+                <button
+                    class="filter-btn text-white border border-gray-600 hover:border-neoncyan hover:shadow-[0_0_15px_rgba(57,255,20,0.5)] px-6 py-2 rounded-full font-medium transition-all"
+                    data-filter="webdev">Webdev</button>
+            </div>
+
+            <!-- Grid Projektów - Zredukowany wygląd kart na rzecz detali w modalach -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto" id="portfolio-grid">
+
+                <!-- Projekt 1: Turnieje -->
+                <div class="portfolio-item glass-panel rounded-xl overflow-hidden card-hover neon-border flex flex-col items-center text-center p-8"
+                    data-category="esport">
+                    <div
+                        class="w-20 h-20 rounded-full bg-deeppurple flex items-center justify-center mb-6 shadow-lg border border-gray-700">
+                        <i class="fa-solid fa-trophy text-3xl text-yellow-500 shadow-yellow-500 drop-shadow-lg"></i>
+                    </div>
+                    <span class="text-purple-400 text-xs font-bold mb-2 uppercase tracking-wider">E-sport / Gracz</span>
+                    <h3 class="text-2xl font-bold mb-3">Osiągnięcia Turniejowe</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-1">Szczegółowa lina czasu turniejów LAN m.in. Mistrzostwa
+                        Szkół 2019 oraz turnieje CS:GO. Dziesiątki medali do odkrycia.</p>
+                    <a href="turnieje.html"
+                        class="neon-button inline-block text-center px-8 py-3 rounded-full font-bold w-full uppercase text-sm tracking-wider">
+                        Odkryj Osiągnięcia <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Projekt 2: Komentator -->
+                <div class="portfolio-item glass-panel rounded-xl overflow-hidden card-hover neon-border flex flex-col items-center text-center p-8"
+                    data-category="esport">
+                    <div
+                        class="w-20 h-20 rounded-full bg-deeppurple flex items-center justify-center mb-6 shadow-lg border border-gray-700">
+                        <i class="fa-solid fa-microphone text-3xl text-blue-400 drop-shadow-lg"></i>
+                    </div>
+                    <span class="text-blue-400 text-xs font-bold mb-2 uppercase tracking-wider">E-sport / Caster</span>
+                    <h3 class="text-2xl font-bold mb-3">Komentator Rozgrywek</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-1">Współpraca casterska na przestrzeni lat dla mocnych
+                        marek, licznych lig studenckich oraz transmisji na kanale własnym. </p>
+                    <a href="komentator.html"
+                        class="neon-button inline-block text-center px-8 py-3 rounded-full font-bold w-full uppercase text-sm tracking-wider">
+                        Sprawdź Detale <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Projekt 3: Organizator -->
+                <div class="portfolio-item glass-panel rounded-xl overflow-hidden card-hover neon-border flex flex-col items-center text-center p-8"
+                    data-category="esport">
+                    <div
+                        class="w-20 h-20 rounded-full bg-deeppurple flex items-center justify-center mb-6 shadow-lg border border-gray-700">
+                        <i class="fa-solid fa-sitemap text-3xl text-pink-500 drop-shadow-lg"></i>
+                    </div>
+                    <span class="text-pink-400 text-xs font-bold mb-2 uppercase tracking-wider">Manager</span>
+                    <h3 class="text-2xl font-bold mb-3">Project Manager & Media</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-1">Zapoznaj się z doświadczeniem pozakulisowym - budowanie
+                        eventów od fundamentu jako dyrektor projektów lanowych.</p>
+                    <a href="manager.html"
+                        class="neon-button inline-block text-center px-8 py-3 rounded-full font-bold w-full uppercase text-sm tracking-wider">
+                        Wejdź za kulisy <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Projekt 4: Kwalifikacje -->
+                <div class="portfolio-item glass-panel rounded-xl overflow-hidden card-hover neon-border flex flex-col items-center text-center p-8 filter-hidden"
+                    data-category="pc-build">
+                    <div
+                        class="w-20 h-20 rounded-full bg-deeppurple flex items-center justify-center mb-6 shadow-lg border border-gray-700">
+                        <i class="fa-solid fa-certificate text-3xl text-neoncyan drop-shadow-lg"></i>
+                    </div>
+                    <span class="text-neoncyan text-xs font-bold mb-2 uppercase tracking-wider">Edukacja / Uprawnienia /
+                        Serwis PC</span>
+                    <h3 class="text-2xl font-bold mb-3">Certyfikaty Informatyczne</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-1">Potwierdzone umiejętności praktyczne. Montaż i sprzęt
+                        (EE.08), szkolenia wyższe oraz inne licencje IT.</p>
+                    <button
+                        class="open-modal-btn neon-button px-8 py-3 rounded-full font-bold w-full uppercase text-sm tracking-wider"
+                        data-modal="modal-edu">Zobacz Licencje <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                </div>
+
+                <!-- Projekt 5: PC Build -->
+                <div class="portfolio-item glass-panel rounded-xl overflow-hidden card-hover neon-border flex flex-col items-center text-center p-8 filter-hidden"
+                    data-category="pc-build">
+                    <div
+                        class="w-20 h-20 rounded-full bg-deeppurple flex items-center justify-center mb-6 shadow-lg border border-gray-700">
+                        <i class="fa-solid fa-desktop text-3xl text-green-400 drop-shadow-lg"></i>
+                    </div>
+                    <span class="text-green-400 text-xs font-bold mb-2 uppercase tracking-wider">Hardware /
+                        Serwis</span>
+                    <h3 class="text-2xl font-bold mb-3">Montaż i Serwis PC</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-1">Profesjonalne doradztwo z zakresu doboru podzespołów,
+                        zaawansowany montaż zestawów komputerowych oraz diagnostyka naprawcza.</p>
+                    <a href="pc-build.html"
+                        class="neon-button inline-block text-center px-8 py-3 rounded-full font-bold w-full uppercase text-sm tracking-wider">
+                        Zobacz Projekty <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Projekt: Webdev (Opis) -->
+                <div class="portfolio-item col-span-1 md:col-span-2 lg:col-span-3 text-center py-8 filter-hidden"
+                    data-category="webdev">
+                    <i class="fa-brands fa-github text-4xl text-gray-600 mb-4 drop-shadow-lg"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Projekty Webowe</h3>
+                    <p class="max-w-2xl mx-auto text-gray-400 text-base mb-6">
+                        Zbiór moich realizacji z zakresu programowania, stron internetowych oraz aplikacji webowych
+                        udostępniam i rozwijam w moim repozytorium jako kod otwarty (GitHub w trakcie budowy).
+                    </p>
+                    <a href="https://github.com/Tchomi" target="_blank" rel="noopener noreferrer"
+                        class="neon-button inline-flex items-center text-center px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider">
+                        Zobacz mojego GitHuba <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Projekt Webdev: Rejestr ZDZ -->
+                <div class="portfolio-item md:col-span-2 relative overflow-hidden rounded-xl border border-gray-700 hover:border-neoncyan shadow-lg group filter-hidden"
+                    data-category="webdev">
+                    <img src="wypozyczeniazdz.bmp" alt="Rejestr Wypożyczeń ZDZ"
+                        class="object-cover w-full h-full object-center transform group-hover:scale-105 transition-transform duration-500 min-h-[300px]">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-left">
+                        <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Rejestr Wypożyczeń
+                            ZDZ</h3>
+                        <p class="text-gray-300 text-sm max-w-lg">Aplikacja do rejestru wypożyczeń sprzętu dla ZDZ
+                            Bielsko-Biała z integracją logowania przez Microsoft Teams - Laravel, PHP, HTML, CSS</p>
+                    </div>
+                </div>
+
+                <!-- Projekt Webdev: Terminarz -->
+                <div class="portfolio-item md:col-span-1 relative overflow-hidden rounded-xl border border-gray-700 hover:border-neoncyan shadow-lg group filter-hidden"
+                    data-category="webdev">
+                    <img src="terminarzscreen.bmp" alt="Terminarz Korepetycji"
+                        class="object-cover w-full h-full object-center transform group-hover:scale-105 transition-transform duration-500 min-h-[300px]">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-left">
+                        <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Terminarz Korepetycji
+                        </h3>
+                        <p class="text-gray-300 text-sm max-w-lg">Terminarz z automatycznym podliczaniem należności za
+                            korepetycje - Laravel, PHP, HTML, CSS</p>
+                    </div>
+                </div>
+
+                <!-- Projekt Webdev: Treningi -->
+                <div class="portfolio-item md:col-span-1 relative overflow-hidden rounded-xl border border-gray-700 hover:border-neoncyan shadow-lg group filter-hidden"
+                    data-category="webdev">
+                    <img src="treningi.bmp" alt="Aplikacja Treningowa ZDZ"
+                        class="object-cover w-full h-full object-center transform group-hover:scale-105 transition-transform duration-500 min-h-[300px]">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-left">
+                        <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Aplikacja Treningowa
+                            ZDZ</h3>
+                        <p class="text-gray-300 text-sm max-w-lg">Aplikacja do wprowadzania rezultatów treningu w
+                            e-sporcie dla uczniów ZDZ Bielsko-Biała - Laravel, PHP, HTML, CSS</p>
+                    </div>
+                </div>
+
+                <!-- Projekt Webdev: Liga 1vs1 -->
+                <div class="portfolio-item md:col-span-1 relative overflow-hidden rounded-xl border border-gray-700 hover:border-neoncyan shadow-lg group filter-hidden"
+                    data-category="webdev">
+                    <img src="liga1vs1.bmp" alt="Liga 1vs1 ZDZ"
+                        class="object-cover w-full h-full object-center transform group-hover:scale-105 transition-transform duration-500 min-h-[300px]">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-left">
+                        <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Aplikacja Ligi 1vs1
+                            ZDZ</h3>
+                        <p class="text-gray-300 text-sm max-w-lg">Aplikacja do wprowadzania wyników ligowych w ramach
+                            zajęć dodatkowych dla uczniów ZDZ Bielsko-Biała - Laravel, PHP, HTML, CSS</p>
+                    </div>
+                </div>
+
+
+                <!-- Projekt Grafika: Illustrator -->
+                <div class="portfolio-item md:col-span-1 relative overflow-hidden rounded-xl border border-gray-700 hover:border-purple-400 shadow-lg group filter-hidden"
+                    data-category="grafika">
+                    <img src="cszaliczenie.bmp" alt="Plakat typograficzny, DNA of Counter-Strike"
+                        class="object-cover w-full h-full object-center transform group-hover:scale-105 transition-transform duration-500 min-h-[300px]">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-left">
+                        <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Plakat typograficzny,
+                            DNA of Counter-Strike</h3>
+                        <p class="text-gray-300 text-sm max-w-lg">Illustrator</p>
+                    </div>
+                </div>
+
+                <!-- Projekt Grafika: W budowie -->
+                <div class="portfolio-item md:col-span-1 lg:col-span-2 glass-panel rounded-xl border border-gray-700 hover:border-purple-400/50 shadow-lg flex flex-col items-center justify-center text-center p-8 filter-hidden min-h-[300px]"
+                    data-category="grafika">
+                    <div
+                        class="w-16 h-16 rounded-full bg-deeppurple flex items-center justify-center mb-6 shadow-lg border border-gray-700">
+                        <i class="fa-solid fa-compass-drafting text-2xl text-purple-400 drop-shadow-lg"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Portfolio w trakcie budowy</h3>
+                    <p class="text-gray-400 text-sm max-w-md">Moja teczka z pracami wciąż się zapełnia. Kolejne
+                        realizacje przechodzą właśnie selekcję i wkrótce zaczną się tu pojawiać!</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Kontakt -->
+    <section id="contact" class="py-24 bg-deeppurple bg-opacity-20 relative border-t border-gray-800">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Złapmy <span class="gradient-text">Kontakt</span></h2>
+                <div class="w-16 h-1 bg-neoncyan mx-auto rounded-full box-shadow"></div>
+                <p class="mt-4 text-gray-400">Masz projekt? Szukasz zawodnika lub profesjonalnego głosu? Napisz do mnie!
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Karta Email -->
+                <a href="mailto:tomasznaglikzdz@gmail.com"
+                    class="glass-panel p-8 rounded-2xl border border-gray-700 hover:border-neoncyan transition-all group flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 rounded-full bg-neoncyan bg-opacity-10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(57,255,20,0.2)]">
+                        <i class="fa-solid fa-envelope text-3xl text-neoncyan"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Wyślij E-mail</h3>
+                    <p class="text-gray-400 text-sm mb-4">Jestem dostępny pod adresem:</p>
+                    <span class="text-neoncyan font-mono font-bold tracking-wider">tomasznaglikzdz@gmail.com</span>
+                </a>
+
+                <!-- Karta Telefon -->
+                <a href="tel:+48XXXXXXXXX"
+                    class="glass-panel p-8 rounded-2xl border border-gray-700 hover:border-neoncyan transition-all group flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 rounded-full bg-neoncyan bg-opacity-10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(57,255,20,0.2)]">
+                        <i class="fa-solid fa-phone text-3xl text-neoncyan"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Zadzwoń do mnie</h3>
+                    <p class="text-gray-400 text-sm mb-4">Porozmawiajmy bezpośrednio:</p>
+                    <span class="text-neoncyan font-mono font-bold tracking-wider">+48 797 288 798</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stopka -->
+    <footer class="py-10 text-center text-gray-500 text-sm border-t border-gray-800 relative z-10 bg-[#0A0514]">
+        <p>&copy; 2026 Portfolio. Tomasz "Tchomii" Naglik.</p>
+    </footer>
+
+
+
+    <!-- ================= MODALS START ================= -->
+
+
+    <!-- Modal 4: Kwalifikacje EDU -->
+    <div id="modal-edu" class="custom-modal fixed inset-0 z-[100] flex items-center justify-center">
+        <div class="modal-backdrop absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm cursor-pointer"></div>
+        <div
+            class="modal-content-scale glass-panel w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-xl relative z-10 p-8 border border-neoncyan text-left mx-4 border-opacity-30">
+            <button
+                class="modal-close absolute top-6 right-6 text-gray-400 hover:text-neoncyan text-3xl transition-colors"><i
+                    class="fa-solid fa-xmark"></i></button>
+            <div class="mb-8 border-b border-gray-700 pb-4">
+                <h2 class="text-3xl font-bold text-neoncyan">Certyfikaty Informatyczne</h2>
+                <p class="text-gray-400 mt-2">Dowody moich praktycznych umiejętności cyfrowych.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Studia -->
+                <div
+                    class="flex flex-col bg-[#1A0B2E] bg-opacity-60 p-5 rounded-lg border border-purple-500 border-opacity-40 hover:border-opacity-100 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] transition-all">
+                    <span class="text-xs text-purple-300 font-semibold tracking-wider uppercase mb-1">Studia (2025 -
+                        Obecnie)</span>
+                    <h4 class="text-xl font-bold text-white"><i
+                            class="fa-solid fa-graduation-cap text-purple-400 mr-2"></i> Wyższa Szkoła Informatyki i
+                        Zarządzania</h4>
+                    <p class="text-gray-300 mt-2">Bielsko-Biała, studia inżynierskie.</p>
+                </div>
+
+                <div
+                    class="flex flex-col bg-gray-800 bg-opacity-60 p-5 rounded-lg border border-gray-600 hover:border-neoncyan transition-colors">
+                    <span class="text-xs text-gray-400 mb-1">Egzamin Techniczny</span>
+                    <h4 class="text-xl font-bold text-white"><i
+                            class="fa-solid fa-network-wired text-neoncyan mr-2"></i> Kwalifikacja EE.08</h4>
+                    <p class="text-gray-300 mt-2">Montaż i eksploatacja systemów komputerowych, urządzeń peryferyjnych i
+                        sieci infrastrukturalnych.</p>
+                </div>
+
+                <div
+                    class="flex flex-col bg-gray-800 bg-opacity-60 p-5 rounded-lg border border-gray-600 hover:border-neoncyan transition-colors">
+                    <span class="text-xs text-gray-400 mb-1">Egzamin Programistyczny</span>
+                    <h4 class="text-xl font-bold text-white"><i class="fa-solid fa-code text-cyan-400 mr-2"></i>
+                        Kwalifikacja EE.09</h4>
+                    <p class="text-gray-300 mt-2">Programowanie, tworzenie i administrowanie stronami internetowymi i
+                        bazami danych.</p>
+                </div>
+
+                <div
+                    class="flex flex-col bg-gray-800 bg-opacity-60 p-5 rounded-lg border border-gray-600 hover:border-neoncyan transition-colors">
+                    <span class="text-xs text-gray-400 mb-1">Szkolenia Specjalistyczne</span>
+                    <h4 class="text-xl font-bold text-white"><i
+                            class="fa-solid fa-microphone-lines text-pink-400 mr-2"></i> Uniwersytet Młodego
+                        Dziennikarza + E-sport</h4>
+                    <p class="text-gray-300 mt-2">Profesjonalny warsztat obycia przed kamerą oraz mikrofonem.</p>
+                </div>
+
+                <div
+                    class="flex items-center gap-4 bg-gray-800 bg-opacity-60 p-5 rounded-lg border border-gray-600 hover:border-neoncyan transition-colors">
+                    <div class="bg-[#0A0514] p-3 rounded-full border border-gray-700">
+                        <i class="fa-solid fa-car text-neoncyan text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Prawo Jazdy Kat. B</h4>
+                        <p class="text-gray-400 text-sm mt-1">Uprawnienia i aktywne prowadzenie pojazdów od 2021 roku.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: Grafiki -->
+    <div id="modal-grafiki" class="custom-modal fixed inset-0 z-[100] flex items-center justify-center">
+        <div class="modal-backdrop absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm cursor-pointer"></div>
+        <div
+            class="modal-content-scale glass-panel w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-xl relative z-10 p-8 border border-purple-400 text-left mx-4 border-opacity-30 flex flex-col">
+            <button
+                class="modal-close absolute top-6 right-6 text-gray-400 hover:text-purple-400 text-3xl transition-colors"><i
+                    class="fa-solid fa-xmark"></i></button>
+            <div class="mb-8 border-b border-gray-700 pb-4 pr-10">
+                <h2 class="text-3xl font-bold text-purple-400">Grafiki</h2>
+                <p class="text-gray-400 mt-2">Przegląd prac wizualnych i zrealizowanych kampanii społecznościowych.</p>
+            </div>
+            <div class="space-y-6 text-center text-gray-400 py-12 flex-1 relative">
+                <div class="absolute inset-0 flex items-center justify-center opacity-10">
+                    <i class="fa-solid fa-pen-nib text-[15rem]"></i>
+                </div>
+                <i class="fa-solid fa-images text-6xl text-gray-600 mb-6 drop-shadow-lg relative z-10"></i>
+                <h3 class="text-2xl font-bold text-white mb-2 relative z-10">Galeria wkrótce dostępna</h3>
+                <p class="relative z-10 max-w-md mx-auto">Sekcja jest obecnie aktualizowana o nowe projekty graficzne.
+                    Trwa proces przystosowania formatów i kompresji dla optymalnego działania strony.</p>
+            </div>
+        </div>
+    </div>
+    <!-- ================= MODALS END ================= -->
+
+
+
+    <!-- Skrypty JS - Modale logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const modalBtns = document.querySelectorAll('.open-modal-btn');
+            const modals = document.querySelectorAll('.custom-modal');
+            const closeBtns = document.querySelectorAll('.modal-close');
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+
+            // Funkcja otwierająca
+            modalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const modalId = btn.getAttribute('data-modal');
+                    const targetModal = document.getElementById(modalId);
+                    if (targetModal) {
+                        targetModal.classList.add('open');
+                        document.body.classList.add('modal-active');
+                    }
+                });
+            });
+
+            // Funkcja zamykająca
+            const closeModal = () => {
+                modals.forEach(m => m.classList.remove('open'));
+                document.body.classList.remove('modal-active');
+            };
+
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', closeModal);
+            });
+
+            backdrops.forEach(bd => {
+                bd.addEventListener('click', closeModal);
+            });
+
+            // Zamknięcie za pomocą ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // Filter logic
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state dla przycisków
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-neoncyan', 'text-darkbg', 'shadow-[0_0_15px_rgba(57,255,20,0.5)]');
+                        b.classList.add('text-white', 'border', 'border-gray-600');
+                    });
+                    btn.classList.remove('text-white', 'border', 'border-gray-600');
+                    btn.classList.add('bg-neoncyan', 'text-darkbg', 'shadow-[0_0_15px_rgba(57,255,20,0.5)]');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    portfolioItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category').includes(filterValue)) {
+                            item.classList.remove('filter-hidden');
+                            item.style.opacity = '0';
+                            setTimeout(() => item.style.opacity = '1', 50);
+                        } else {
+                            item.classList.add('filter-hidden');
+                        }
+                    });
+                });
+            });
+
+            // Auto-filter based on URL hash (e.g., #filter-webdev)
+            const handleHashFilter = () => {
+                const hash = window.location.hash;
+                if (hash.startsWith('#filter-')) {
+                    const filterType = hash.replace('#filter-', '');
+                    const targetBtn = document.querySelector(`.filter-btn[data-filter="${filterType}"]`);
+                    if (targetBtn) {
+                        // Scroll to portfolio section
+                        document.querySelector('#portfolio').scrollIntoView({ behavior: 'smooth' });
+                        // Trigger click on filter button
+                        targetBtn.click();
+                    }
+                } else if (hash.startsWith('#open-modal-')) {
+                    const modalId = hash.replace('#open-modal-', '');
+                    const targetModal = document.getElementById(modalId);
+                    if (targetModal) {
+                        targetModal.classList.add('open');
+                        document.body.classList.add('modal-active');
+                    }
+                }
+            };
+
+            // Run on load
+            if (window.location.hash) {
+                setTimeout(handleHashFilter, 500); // Small delay to ensure everything is ready
+            }
+
+            // Listen for hash changes while on the same page
+            window.addEventListener('hashchange', handleHashFilter);
+
+        });
+    </script>
+</body>
+
+</html>

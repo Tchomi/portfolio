@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnieje LAN - Tomasz Naglik</title>
+
+    <meta name="description" content="Kariera zawodnicza i osiągnięcia LAN.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deeppurple: '#1A0B2E',
+                        neoncyan: '#00FFFF',
+                        darkbg: '#0A0514'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0A0514; color: #ffffff; overflow-x: hidden; position: relative; }
+        body::before {
+            content: ''; position: fixed; top: -20%; left: -10%; width: 120%; height: 120%;
+            background: radial-gradient(circle at 10% 20%, rgba(26, 11, 46, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 40%);
+            z-index: -1; pointer-events: none;
+        }
+        .glass-panel {
+            background: rgba(26, 11, 46, 0.25); backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 255, 255, 0.15); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-nav {
+            background: rgba(10, 5, 20, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #D900FF 0%, #00FFFF 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        /* Horizontal scrollbar for timeline */
+        .timeline-scroller::-webkit-scrollbar { height: 10px; }
+        .timeline-scroller::-webkit-scrollbar-track { background: rgba(10, 5, 20, 0.5); border-radius: 10px; }
+        .timeline-scroller::-webkit-scrollbar-thumb { background: rgba(26, 11, 46, 0.8); border-radius: 10px; border: 1px solid rgba(0, 255, 255, 0.3); }
+        .timeline-scroller::-webkit-scrollbar-thumb:hover { background: #00FFFF; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0A0514; }
+        ::-webkit-scrollbar-thumb { background: #1A0B2E; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00FFFF; }
+
+        /* Dropdown Styles */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Gap bridge */
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-200">
+    <nav class="fixed w-full top-0 z-50 glass-nav py-4 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-wider text-white">
+                PORT<span class="text-neoncyan">FOLIO</span>
+            </a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html#home" class="hover:text-neoncyan transition-colors">Start</a>
+                
+                <!-- Dropdown Kariera -->
+                <div class="relative dropdown group z-[60]">
+                    <a href="index.html#portfolio" class="flex items-center hover:text-neoncyan transition-colors py-2 font-bold">
+                        Kariera <i class="fa-solid fa-chevron-down ml-2 text-xs group-hover:rotate-180 transition-transform"></i>
+                    </a>
+                    <div class="dropdown-menu absolute right-0 top-full w-64 bg-[#0A0514] rounded-xl border-2 border-neoncyan p-2 shadow-[0_20px_50px_rgba(0,0,0,0.8)] mt-2 z-[100]">
+                        <div class="flex flex-col space-y-1 relative z-10">
+                            <!-- Kategoria: E-sport -->
+                            <div class="px-4 py-2 text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase border-b border-gray-800 mb-1">E-Sport</div>
+
+                            <a href="turnieje.html" class="flex items-center px-4 py-3 rounded-lg bg-neoncyan bg-opacity-10 text-neoncyan transition-all group/item text-sm">
+                                <i class="fa-solid fa-trophy w-6 text-yellow-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span class="font-bold">Osiągnięcia Turniejowe</span>
+                            </a>
+                            <a href="komentator.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i class="fa-solid fa-microphone w-6 text-blue-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Komentator Rozgrywek</span>
+                            </a>
+                            <a href="manager.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i class="fa-solid fa-sitemap w-6 text-pink-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Project Manager & Media</span>
+                            </a>
+                            <!-- Kategoria: Projekty i Edukacja -->
+                            <div class="px-4 py-2 mt-2 text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase border-b border-gray-800 mb-1">Projekty i Edukacja</div>
+
+                            <a href="pc-build.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i class="fa-solid fa-desktop w-6 text-green-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Montaż i Serwis PC</span>
+                            </a>
+                            <a href="index.html#filter-webdev" class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i class="fa-solid fa-code w-6 text-cyan-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Projekty Webowe</span>
+                            </a>
+                            <a href="index.html#filter-grafika" class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i class="fa-solid fa-palette w-6 text-purple-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Portfolio Graficzne</span>
+                            </a>
+                            <a href="index.html#open-modal-modal-edu" class="flex items-center px-4 py-3 rounded-lg hover:bg-neoncyan hover:bg-opacity-10 hover:text-neoncyan transition-all group/item text-sm">
+                                <i class="fa-solid fa-certificate w-6 text-yellow-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Certyfikaty Informatyczne</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="index.html#contact" class="hover:text-neoncyan transition-colors">Kontakt</a>
+            </div>
+            
+            <!-- Mobile Powrót -->
+            <div class="flex md:hidden">
+                <a href="index.html#portfolio" class="text-neoncyan hover:text-white transition-colors">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Powrót
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen pt-32 pb-24 relative">
+        <div class="container mx-auto px-6 max-w-[95%] xl:max-w-[1600px]">
+            <div class="glass-panel p-4 md:p-8 rounded-2xl border border-[#00FFFF] border-opacity-30">
+                <div class="mb-8 border-b border-gray-700 pb-8 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold"><span class="gradient-text">Turnieje LAN</span> & Kariera Zawodnicza</h2>
+                    <p class="text-gray-400 mt-2 mb-6 text-base">Pełna linia czasu uczestnictwa w środowisku esportowym.</p>
+                    
+                    <!-- Osiągnięcia Ogólne Wyciągnięte ponad Oś Czasu -->
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-6 bg-[#1A0B2E] bg-opacity-60 border border-pink-500 border-opacity-40 rounded-2xl p-4 md:p-5 w-full lg:w-[80%] xl:w-[60%] mx-auto shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.25)] transition-all">
+                        <div class="flex items-center text-gray-200">
+                            <i class="fa-solid fa-ranking-star text-pink-500 text-3xl mr-4 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)]"></i>
+                            <div class="text-left leading-tight">
+                                <span class="block font-extrabold text-xl text-pink-100">33 miejsce</span>
+                                <span class="text-sm text-gray-400">w Rankingu Polskich Drużyn Cybersport.pl</span>
+                            </div>
+                        </div>
+                        
+                        <div class="hidden md:block w-px h-10 bg-pink-700 opacity-40"></div>
+                        
+                        <div class="flex items-center text-gray-200">
+                            <i class="fa-solid fa-gamepad text-pink-500 text-3xl mr-4 drop-shadow-[0_0_8px_rgba(236,72,153,0.8)]"></i>
+                            <div class="text-left leading-tight">
+                                <span class="block font-extrabold text-xl text-pink-100">2750 ELO</span>
+                                <span class="text-sm text-gray-400">Max elo na platformie Faceit (2023)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Zawartość timelinu -->
+                <div id="timelineContainer" class="relative timeline-scroller w-full overflow-x-auto pb-6 pt-4">
+                    <div class="flex space-x-4 md:space-x-6 min-w-max relative z-10 px-2 lg:px-4">
+                        <!-- Stała linia pozioma z tyłu kropek -->
+                        <div class="absolute top-[10px] left-4 right-4 h-1 bg-gray-700 z-[-1]"></div>
+
+                        <!-- 2018 -->
+                        <div class="w-48 md:w-52 flex flex-col relative shrink-0">
+                            <div class="w-6 h-6 rounded-full bg-neoncyan shadow-[0_0_15px_rgba(0,255,255,0.8)] border-4 border-[#0A0514] mx-auto mb-4 relative z-10"></div>
+                            <h3 class="text-xl font-extrabold text-neoncyan text-center mb-4 drop-shadow-md">2018</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li class="bg-gray-800 bg-opacity-60 p-3 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-yellow-700 mr-1"></i> SETZDZ - ETŚ 1v1</strong> <br> Bytom
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-30 p-2 rounded-xl border border-gray-800 text-xs">
+                                    <strong>Team VoN</strong> <br> 2016 - list. 2018
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-30 p-2 rounded-xl border border-gray-800 text-xs">
+                                    <strong>Ferox</strong> - listopad
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 2019 -->
+                        <div class="w-56 md:w-60 flex flex-col relative shrink-0">
+                            <div class="w-6 h-6 rounded-full bg-neoncyan shadow-[0_0_15px_rgba(0,255,255,0.8)] border-4 border-[#0A0514] mx-auto mb-4 relative z-10"></div>
+                            <h3 class="text-xl font-extrabold text-neoncyan text-center mb-4 drop-shadow-md">2019</h3>
+                            <ul class="space-y-2 text-gray-300 text-xs">
+                                <li class="bg-gray-800 bg-opacity-60 p-2.5 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-yellow-500 mr-1"></i> E-Sportowe Mistrzostwa Szkół</strong> <br> Rybnik
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-60 p-2.5 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-gray-400 mr-1"></i> SETZDZ - Czysta Rywalizacja</strong> <br> elim. LAN
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-60 p-2.5 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-gray-400 mr-1"></i> Mechanik E-sport Cup</strong> <br> Tarnowskie Góry
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-60 p-2.5 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-yellow-700 mr-1"></i> Game Master - Jaworzno</strong>
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-60 p-2.5 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-yellow-700 mr-1"></i> Mechanik Esport Cup II</strong> <br> Tarnowskie Góry
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-30 p-2 rounded-xl border border-gray-800 opacity-90">
+                                    Super Game Esports (4msc), Atoms Cup
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-30 p-2 rounded-xl border border-gray-800 opacity-80">
+                                    <strong>Ferox</strong> - paź 2019 
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 2020 -->
+                        <div class="w-60 flex flex-col relative shrink-0">
+                            <div class="w-6 h-6 rounded-full bg-neoncyan shadow-[0_0_15px_rgba(0,255,255,0.8)] border-4 border-[#0A0514] mx-auto mb-4 relative z-10"></div>
+                            <h3 class="text-xl font-extrabold text-neoncyan text-center mb-4 drop-shadow-md">2020</h3>
+                            <ul class="space-y-2 text-gray-300 text-xs">
+                                <li class="bg-gray-800 bg-opacity-60 p-2.5 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-yellow-500 mr-1"></i> Turnieje:</strong>
+                                    <ul class="list-disc ml-4 mt-1 opacity-90 space-y-0.5">
+                                        <li>Gament.</li>
+                                        <li>Magic Cup 1</li>
+                                        <li>Tour De ZDZ #12 Żywiec</li>
+                                        <li>KING OF THE ZDZ WWA</li>
+                                    </ul>
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-60 p-2.5 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-gray-400 mr-1"></i> Turnieje:</strong>
+                                    <ul class="list-disc ml-4 mt-1 opacity-90 space-y-0.5">
+                                        <li>ZDZ Championship - Bielsko-Biała</li>
+                                        <li>Conflict League</li>
+                                        <li>Neproser Cup 3</li>
+                                    </ul>
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-60 p-2.5 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                    <strong><i class="fa-solid fa-medal text-yellow-700 mr-1"></i> Turnieje:</strong>
+                                    <ul class="list-disc ml-4 mt-1 opacity-90 space-y-0.5">
+                                        <li>LTK Cup</li>
+                                        <li>Fox Cup League</li>
+                                    </ul>
+                                </li>
+                                <li class="bg-gray-800 bg-opacity-30 p-2 rounded-xl border border-gray-800 text-[10px]">
+                                    <strong>Team VoN</strong> - (styczeń-lipiec)
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Grupa 2021-2025 z wkomponowanym zdjęciem -->
+                        <div class="flex flex-col shrink-0 justify-start h-full">
+                            <div class="flex space-x-4 md:space-x-6 mb-8">
+                                <!-- 2021 -->
+                                <div class="w-48 flex flex-col relative shrink-0">
+                                    <div class="w-6 h-6 rounded-full bg-neoncyan shadow-[0_0_15px_rgba(0,255,255,0.8)] border-4 border-[#0A0514] mx-auto mb-4 relative z-10"></div>
+                                    <h3 class="text-xl font-extrabold text-neoncyan text-center mb-4 drop-shadow-md">2021</h3>
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li class="bg-gray-800 bg-opacity-60 p-3 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                            <strong><i class="fa-solid fa-medal text-yellow-500 mr-1"></i> Mistrzostwa Polski Szkół w E-sporcie</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- 2022 -->
+                                <div class="w-48 flex flex-col relative shrink-0">
+                                    <div class="w-6 h-6 rounded-full bg-neoncyan shadow-[0_0_15px_rgba(0,255,255,0.8)] border-4 border-[#0A0514] mx-auto mb-4 relative z-10"></div>
+                                    <h3 class="text-xl font-extrabold text-neoncyan text-center mb-4 drop-shadow-md">2022</h3>
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li class="bg-gray-800 bg-opacity-60 p-3 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                            <strong><i class="fa-solid fa-medal text-yellow-500 mr-1"></i> Polska Liga Klas Esportowych</strong> <br> Finały LAN
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- 2025 -->
+                                <div class="w-48 flex flex-col relative shrink-0">
+                                    <div class="w-6 h-6 rounded-full bg-neoncyan shadow-[0_0_15px_rgba(0,255,255,0.8)] border-4 border-[#0A0514] mx-auto mb-4 relative z-10"></div>
+                                    <h3 class="text-xl font-extrabold text-neoncyan text-center mb-4 drop-shadow-md">2025</h3>
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li class="bg-gray-800 bg-opacity-60 p-3 rounded-xl border border-gray-600 transition-all hover:border-cyan-400 hover:shadow-md">
+                                            <strong><i class="fa-solid fa-medal text-yellow-700 mr-1"></i> Modern Players</strong> <br> Bielsko-Biała
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Zbiór zdjęć gracza pod latami 2021-2025 -->
+                            <div class="w-full mt-auto flex justify-center pb-4">
+                                <div class="flex items-center gap-4 md:gap-8">
+                                    <!-- Pierwsze zdjęcie -->
+                                    <div class="glass-panel p-1.5 md:p-2 rounded-full border border-neoncyan border-opacity-30 transition-all hover:border-opacity-100 hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] w-28 h-28 md:w-40 md:h-40 shrink-0 flex items-center justify-center">
+                                        <img src="gracz.jpg" alt="Tchomii - Kariera Zawodnicza" class="w-full h-full object-cover rounded-full shadow-inner hover:scale-[1.05] transition-transform duration-300">
+                                    </div>
+                                    <!-- Drugie zdjęcie -->
+                                    <div class="glass-panel p-1.5 md:p-2 rounded-full border border-purple-400 border-opacity-40 transition-all hover:border-opacity-100 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] w-28 h-28 md:w-40 md:h-40 shrink-0 flex items-center justify-center">
+                                        <img src="gracz2.JPG" alt="Tchomii - Turniej" class="w-full h-full object-cover rounded-full shadow-inner hover:scale-[1.05] transition-transform duration-300">
+                                    </div>
+                                    <!-- Trzecie zdjęcie -->
+                                    <div class="glass-panel p-1.5 md:p-2 rounded-full border border-pink-500 border-opacity-40 transition-all hover:border-opacity-100 hover:shadow-[0_0_15px_rgba(236,72,153,0.4)] w-28 h-28 md:w-40 md:h-40 shrink-0 flex items-center justify-center">
+                                        <img src="gracz3.JPG" alt="Tchomii - Esport" class="w-full h-full object-cover rounded-full shadow-inner hover:scale-[1.05] transition-transform duration-300">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Oś czasu zawiera wyłącznie turnieje wg lat -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-500 text-sm border-t border-gray-800 relative z-10 bg-[#0A0514]">
+        <p>&copy; 2026 Portfolio. Tomasz "Tchomii" Naglik.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('timelineContainer');
+            if(!container) return;
+            
+            let isHovered = false;
+            let scrollSpeed = 0.5; // px per frame - slowly scrolls
+
+            // Pause on interaction
+            container.addEventListener('mouseenter', () => isHovered = true);
+            container.addEventListener('mouseleave', () => isHovered = false);
+            container.addEventListener('touchstart', () => isHovered = true);
+            container.addEventListener('touchend', () => {
+                setTimeout(() => { isHovered = false }, 1500);
+            });
+
+            function autoScroll() {
+                if (!isHovered) {
+                    container.scrollLeft += scrollSpeed;
+                    
+                    // Reverse direction if hitting boundaries (Ping-pong)
+                    if (container.scrollLeft >= (container.scrollWidth - container.clientWidth - 1)) {
+                        scrollSpeed = -0.5;
+                    } else if (container.scrollLeft <= 0) {
+                        scrollSpeed = 0.5;
+                    }
+                }
+                requestAnimationFrame(autoScroll);
+            }
+            
+            // Start scrolling softly after page load
+            setTimeout(() => {
+                requestAnimationFrame(autoScroll);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager - Tomasz Naglik</title>
+    <meta name="description" content="Project Manager & Zaplecze Eventowe.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deeppurple: '#1A0B2E',
+                        neoncyan: '#00FFFF',
+                        darkbg: '#0A0514'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0A0514;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle at 10% 20%, rgba(26, 11, 46, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            background: rgba(26, 11, 46, 0.25);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-nav {
+            background: rgba(10, 5, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #D900FF 0%, #00FFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0A0514;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1A0B2E;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00FFFF;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-200">
+    <nav class="fixed w-full top-0 z-50 glass-nav py-4 transition-all duration-300">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-wider text-white">
+                PORT<span class="text-neoncyan">FOLIO</span>
+            </a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html#home" class="hover:text-pink-500 transition-colors">Start</a>
+                
+                <!-- Dropdown Kariera -->
+                <div class="relative dropdown group z-[60]">
+                    <a href="index.html#portfolio" class="flex items-center hover:text-pink-500 transition-colors py-2 font-bold">
+                        Kariera <i class="fa-solid fa-chevron-down ml-2 text-xs group-hover:rotate-180 transition-transform"></i>
+                    </a>
+                    <div class="dropdown-menu absolute right-0 top-full w-64 bg-[#0A0514] rounded-xl border-2 border-pink-500 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.8)] mt-2 z-[100]">
+                        <div class="flex flex-col space-y-1 relative z-10">
+                            <!-- Kategoria: E-sport -->
+                            <div class="px-4 py-2 text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase border-b border-gray-800 mb-1">E-Sport</div>
+
+                            <a href="turnieje.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-pink-500 hover:bg-opacity-10 hover:text-pink-500 transition-all group/item text-sm">
+                                <i class="fa-solid fa-trophy w-6 text-yellow-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Osiągnięcia Turniejowe</span>
+                            </a>
+                            <a href="komentator.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-pink-500 hover:bg-opacity-10 hover:text-pink-500 transition-all group/item text-sm">
+                                <i class="fa-solid fa-microphone w-6 text-blue-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Komentator Rozgrywek</span>
+                            </a>
+                            <a href="manager.html" class="flex items-center px-4 py-3 rounded-lg bg-pink-500 bg-opacity-10 text-pink-500 transition-all group/item text-sm">
+                                <i class="fa-solid fa-sitemap w-6 text-pink-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span class="font-bold">Project Manager & Media</span>
+                            </a>
+                            <!-- Kategoria: Projekty i Edukacja -->
+                            <div class="px-4 py-2 mt-2 text-[10px] font-bold text-gray-500 tracking-[0.2em] uppercase border-b border-gray-800 mb-1">Projekty i Edukacja</div>
+
+                            <a href="pc-build.html" class="flex items-center px-4 py-3 rounded-lg hover:bg-pink-500 hover:bg-opacity-10 hover:text-pink-500 transition-all group/item text-sm">
+                                <i class="fa-solid fa-desktop w-6 text-green-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Montaż i Serwis PC</span>
+                            </a>
+                            <a href="index.html#filter-webdev" class="flex items-center px-4 py-3 rounded-lg hover:bg-pink-500 hover:bg-opacity-10 hover:text-pink-500 transition-all group/item text-sm">
+                                <i class="fa-solid fa-code w-6 text-cyan-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Projekty Webowe</span>
+                            </a>
+                            <a href="index.html#filter-grafika" class="flex items-center px-4 py-3 rounded-lg hover:bg-pink-500 hover:bg-opacity-10 hover:text-pink-500 transition-all group/item text-sm">
+                                <i class="fa-solid fa-palette w-6 text-purple-400 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Portfolio Graficzne</span>
+                            </a>
+                            <a href="index.html#open-modal-modal-edu" class="flex items-center px-4 py-3 rounded-lg hover:bg-pink-500 hover:bg-opacity-10 hover:text-pink-500 transition-all group/item text-sm">
+                                <i class="fa-solid fa-certificate w-6 text-yellow-500 group-hover/item:scale-110 transition-transform"></i>
+                                <span>Certyfikaty Informatyczne</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="index.html#contact" class="hover:text-pink-500 transition-colors">Kontakt</a>
+            </div>
+            
+            <!-- Mobile Powrót -->
+            <div class="flex md:hidden">
+                <a href="index.html#portfolio" class="text-pink-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Powrót
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen pt-32 pb-24 relative">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="glass-panel p-6 md:p-8 rounded-2xl border border-pink-500 border-opacity-30">
+                <div class="mb-8 border-b border-gray-700 pb-4 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-pink-500">Project Manager & Zaplecze Eventowe</h2>
+                    <p class="text-gray-400 mt-2 text-base">Nadzór fizyczny na Turniejach LAN i organizacja zadań.</p>
+                </div>
+
+                <div class="grid gap-4">
+                    <!-- 1 -->
+                    <div
+                        class="flex flex-col md:flex-row items-start bg-deeppurple bg-opacity-40 p-4 md:p-6 rounded-xl border border-gray-700 shadow-md">
+                        <div class="bg-pink-500 p-3 rounded-xl mb-3 md:mb-0 md:mr-4 shrink-0">
+                            <i class="fa-solid fa-boxes-packing text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-1">Event "Wracamy na LAN" (Bielsko-Biała 2022)</h4>
+                            <p class="text-gray-300 text-base leading-relaxed">Funkcjonowanie jako "2nd Project Manager"
+                                dla SETZDZ. Generalna pomoc przy fizycznym montażu stacji oraz demontażu areny po
+                                wydarzeniu.</p>
+                        </div>
+                    </div>
+
+                    <!-- 1.5 -->
+                    <div
+                        class="flex flex-col md:flex-row items-start bg-deeppurple bg-opacity-40 p-4 md:p-6 rounded-xl border border-gray-700 shadow-md">
+                        <div class="bg-teal-500 p-3 rounded-xl mb-3 md:mb-0 md:mr-4 shrink-0">
+                            <i class="fa-solid fa-school text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-1">Dzień Otwarty ZDZ Bielsko-Biała</h4>
+                            <p class="text-gray-300 text-base leading-relaxed">Organizacja oraz obsługa turnieju
+                                e-sportowego przygotowanego specjalnie dla uczniów szkół podstawowych.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2 -->
+                    <div
+                        class="flex flex-col md:flex-row items-start bg-deeppurple bg-opacity-40 p-4 md:p-6 rounded-xl border border-gray-700 shadow-md">
+                        <div class="bg-blue-500 p-3 rounded-xl mb-3 md:mb-0 md:mr-4 shrink-0">
+                            <i class="fa-solid fa-people-carry-box text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-1">Narodowa Drużyna E-sportu (Katowice & Chorzów 2021)</h4>
+                            <p class="text-gray-300 text-base leading-relaxed">Praktyki zawodowe dla Esports
+                                Association. Aktywna pomoc zawodnikom oraz setup na zapleczu turnieju wspieranego z
+                                budżetu państwa.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3 -->
+                    <div
+                        class="flex flex-col md:flex-row items-start bg-deeppurple bg-opacity-40 p-4 md:p-6 rounded-xl border border-gray-700 shadow-md">
+                        <div class="bg-indigo-500 p-3 rounded-xl mb-3 md:mb-0 md:mr-4 shrink-0">
+                            <i class="fa-solid fa-thumbs-up text-white text-2xl"></i>
+                        </div>
+                        <div class="w-full overflow-hidden">
+                            <h4 class="text-xl font-bold mb-1">Manager Social Media - Team VoN</h4>
+                            <p class="text-gray-300 text-base leading-relaxed mb-4">Wsparcie zasięgów organizacji od
+                                września 2020 do listopada 2020. Projektowanie wizerunku ekipy Team VoN.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                                <div
+                                    class="overflow-hidden rounded-xl border border-gray-600 shadow-md hover:border-indigo-400 transition-colors group">
+                                    <img src="von 1.bmp" alt="Projekt Team VoN 1"
+                                        class="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <div
+                                    class="overflow-hidden rounded-xl border border-gray-600 shadow-md hover:border-indigo-400 transition-colors group">
+                                    <img src="von2.bmp" alt="Projekt Team VoN 2"
+                                        class="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <div
+                                    class="overflow-hidden rounded-xl border border-gray-600 shadow-md hover:border-indigo-400 transition-colors group">
+                                    <img src="von3.bmp" alt="Projekt Team VoN 3"
+                                        class="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 -->
+                    <div
+                        class="flex flex-col md:flex-row items-start bg-deeppurple bg-opacity-40 p-4 md:p-6 rounded-xl border border-gray-700 shadow-md">
+                        <div class="bg-gray-500 p-3 rounded-xl mb-3 md:mb-0 md:mr-4 shrink-0">
+                            <i class="fa-solid fa-ticket text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-1">Obecność Offline</h4>
+                            <p class="text-gray-300 text-base leading-relaxed">Czynny udział i widoczność na wiodących
+                                imprezach esportowych takich jak: IEM Katowice, IEM Kraków, Poznań Game Arena (PGA) i
+                                różne turnieje lokalne.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-500 text-sm border-t border-gray-800 relative z-10 bg-[#0A0514]">
+        <p>&copy; 2026 Portfolio. Tomasz "Tchomii" Naglik.</p>
+    </footer>
+</body>
+
+</html>
